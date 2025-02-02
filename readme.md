@@ -98,7 +98,7 @@ Aplicación móvil de e-commerce desarrollada con React Native y Expo, que inclu
   - Gestión de permisos de ubicación
 
 ## 🖥️ Instalación
-1. Clonar el repositorio : [poner comando]
+1. Clonar el repositorio : `git clone https://github.com/MatiasFigueroaUDC/ecommerce.git`
 2. Instalar dependencias : `npm install`
 3. Iniciar la aplicación: `npm start`
 
