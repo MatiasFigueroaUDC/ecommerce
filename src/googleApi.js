@@ -1,0 +1,1 @@
+export const googleapi = "AIzaSyCT10mKnZ3WMNiPcTRubkGAY2No380ZFl8"
