@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { colors } from '../globals/colors'
-import { usePostCartMutation } from '../services/cart';
+import { useGetProductCartQuery, usePostCartMutation, useUpdateProductCartMutation } from '../services/cart';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
@@ -13,7 +13,9 @@ const ProductDetail = ({ route }) => {
   const { width } = useWindowDimensions()
   const localId = useSelector(state => state.user.localId)
   const [triggerAddProduct] = usePostCartMutation()
+  const [triggerUpdateProduct] = useUpdateProductCartMutation()
   const navigation = useNavigation()
+  const {data:productCart} = useGetProductCartQuery({localId, productId:product.id}) //Para saber si el producto esta en el carrito.
 
   const titleStyles = {
     ...styles.title,
@@ -35,12 +37,26 @@ const ProductDetail = ({ route }) => {
     fontSize: width > 500 ? 35 : 29
   }
 
-  const handleAddProduct = () => {
-    const cartProduct = { 
-      ...product, 
-      quantity: 1
+  const handleAddProduct = async () => {
+    if (productCart) {
+      // Si el producto ya existe, actualizar cantidad
+      const updatedProduct = {
+        ...productCart,
+        quantity: productCart.quantity + 1,
+      }
+      await triggerUpdateProduct({
+        localId,
+        cartProduct: updatedProduct
+      })
+    } else {
+      // Si no existe, crear nuevo
+      const cartProduct = { 
+        ...product, 
+        quantity: 1,
+        total: product.price
+      }
+      await triggerAddProduct({ localId, cartProduct })
     }
-    triggerAddProduct({ localId, cartProduct })
     navigation.navigate("CartStack")
   }
 

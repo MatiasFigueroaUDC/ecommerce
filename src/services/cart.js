@@ -17,6 +17,21 @@ export const cartApi = createApi({
             },
             providesTags: ["addCart", "deleteProduct"]
         }),
+        getProductCart:builder.query({
+            query: ({localId, productId}) => `cart/${localId}/${productId}.json`,
+            providesTags: ["addCart", "deleteProduct"]
+        }),
+        updateProductCart: builder.mutation({
+            query: ({localId, cartProduct}) => ({
+                url: `cart/${localId}/${cartProduct.id}.json`,
+                method: 'PATCH',
+                body: {
+                    quantity: cartProduct.quantity,
+                    total: cartProduct.quantity * cartProduct.price
+                }
+            }),
+            invalidatesTags: ["addCart"]
+        }),
         postCart: builder.mutation({
             query: ({localId, cartProduct}) => ({
                 url: `cart/${localId}/${cartProduct.id}.json`,
@@ -42,4 +57,11 @@ export const cartApi = createApi({
     })
 })
 
-export const { useGetCartQuery, usePostCartMutation, useDeleteCartProductMutation, useDeleteCartMutation } = cartApi
+export const { 
+    useGetCartQuery, 
+    useGetProductCartQuery, 
+    usePostCartMutation, 
+    useUpdateProductCartMutation,
+    useDeleteCartProductMutation, 
+    useDeleteCartMutation 
+} = cartApi
