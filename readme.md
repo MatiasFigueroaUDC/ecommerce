@@ -61,6 +61,52 @@ Aplicación móvil de e-commerce desarrollada con React Native y Expo, que inclu
   - Selección de ubicación
   - Geocodificación inversa
 
+## 📝 Codigo del Tab Navigator
+- **El siguiente codigo muestra la estructura de navegación**
+  ``` javascript
+  const TabNavigator = () => {
+      return (
+          <Tab.Navigator
+              screenOptions={{
+                  headerShown: false,
+                  tabBarStyle: styles.tabBar,
+                  tabBarShowLabel: false,
+                  tabBarLabelPosition: "beside-icon"
+              }}
+          >
+              <Tab.Screen
+                  name="ShopStack"
+                  component={ShopStack}
+                  options={{
+                      tabBarIcon: ({ focused }) => <TabBarIcon text="Tienda" icon="shop" focused={focused} />
+                  }}
+              />
+              <Tab.Screen
+                  name="CartStack"
+                  component={CartStack}
+                  options={{
+                      tabBarIcon: ({ focused }) => <TabBarIcon text="Carrito" icon="shopping-cart" focused={focused} />
+                  }}
+              />
+              <Tab.Screen
+                  name="OrdersStack"
+                  component={OrdersStack}
+                  options={{
+                      tabBarIcon: ({ focused }) => <TabBarIcon text="Ordenes" icon="list" focused={focused} />
+                  }}
+              />
+              <Tab.Screen
+                  name="MyProfileStack"
+                  component={MyProfileStack}
+                  options={{
+                      tabBarIcon: ({ focused }) => <TabBarIcon text="Mi Perfil" icon="user" focused={focused} />
+                  }}
+              />
+          </Tab.Navigator>
+      )
+  }
+  ```
+
 ## 🛠️ Tecnologías
 - **React Native**
   - Framework para desarrollo de aplicaciones móviles nativas
